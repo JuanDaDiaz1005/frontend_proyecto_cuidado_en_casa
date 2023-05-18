@@ -18,7 +18,7 @@ onMounted(() => {
     <nav class="nav-links">
         <div id="links-principales">
           <RouterLink to="/"><img class="logo-inicio" src="../src/assets/LogoSW2.png" alt=""></RouterLink>
-          <RouterLink to="/about">Consultar paciente</RouterLink>
+          <RouterLink to="/consultar_paciente">Consultar paciente</RouterLink>
           <div id="registrar_desplegable">
             Registrar
             <ul id="registrar" class="registrar-menu">
@@ -42,6 +42,7 @@ onMounted(() => {
 <style>
 
 .bodyGeneral {
+  padding: 0;
   margin: 0px 250px;
   background-color: var(--color-beige);
 }
