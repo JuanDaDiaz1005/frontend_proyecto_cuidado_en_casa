@@ -33,7 +33,7 @@ onMounted(() => {
     </nav>
   </header>
 
-  <body>
+  <body class="bodyGeneral">
       <RouterView/>
   </body>
   
@@ -41,6 +41,10 @@ onMounted(() => {
 
 <style>
 
+.bodyGeneral {
+  margin: 0px 250px;
+  background-color: var(--color-beige);
+}
 
 .nav-links{
   display: flex;
