@@ -17,7 +17,7 @@ onMounted(() => {
 
     <nav class="nav-links">
         <div id="links-principales">
-          <RouterLink to="/"><img class="logo-inicio" src="../src/assets/logo.svg" alt=""></RouterLink>
+          <RouterLink to="/"><img class="logo-inicio" src="../src/assets/LogoSW2.png" alt=""></RouterLink>
           <RouterLink to="/about">Consultar paciente</RouterLink>
           <div id="registrar_desplegable">
             Registrar
@@ -34,12 +34,14 @@ onMounted(() => {
   </header>
 
   <body>
-    <RouterView/>
+      <RouterView/>
   </body>
   
 </template>
 
 <style>
+
+
 .nav-links{
   display: flex;
   flex-direction: row;
@@ -53,7 +55,7 @@ onMounted(() => {
   margin: 0;
   width: 30px;
   height: 30px;
-  padding-left: 5px;
+  padding: 0PX 30px 0 15PX;
 }
 
  #links-principales{
@@ -74,10 +76,8 @@ onMounted(() => {
   padding-left: 5px;
  }
 
- #registrar-desplegable{
-  cursor:pointer;
-  display: flex;
-  flex-direction: column;
+ #registrar-desplegable :hover{
+  color: white;
  }
 
 </style>
