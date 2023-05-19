@@ -3,6 +3,7 @@ import { ref } from 'vue'
 const leftDate = ref('')
 const rightDate = ref('')
 const signosVitales = ref([])
+const validDateRange = ref(true)
 
 
 const temporalUseCase = [
@@ -87,20 +88,26 @@ const temporalUseCase = [
 
 const getSignosVitales = () => {
 
+    signosVitales.value = []
     const rightDateStr = getDateTimeStr(rightDate.value?.value)
     const leftDateStr = getDateTimeStr(leftDate.value?.value)
+    const rightDateTimestamp = (new Date(rightDate.value?.value).getTime())
+    const leftDateTimestamp = (new Date(leftDate.value?.value).getTime())
 
     if (!leftDateStr || !rightDateStr) return
+    if (rightDateTimestamp < leftDateTimestamp) {
+        validDateRange.value = false
+        alert('¡ Rango de fechas inválido !')
+        return
+    }
+
+    validDateRange.value = true
 
     setTimeout(() => {
         signosVitales.value = temporalUseCase
-        console.table(signosVitales.value);
-    }, 2000);
-
-    console.log('leftDate', leftDateStr, 'rightDate', rightDateStr);
+    }, 1000);
 }
 
-// funcion para extraer la fecha string en formato "2022-01-01 08:00:00" de un objedo Date.
 const getDateTimeStr = (date) => {
     if (!date) return
     const dateStrFormat = date.replace('T', ' ') + ':00';
@@ -109,33 +116,36 @@ const getDateTimeStr = (date) => {
 </script>
 
 <template>
-    <div>
-        <input @change="getSignosVitales()" class="date" type="datetime-local" name="leftDate" id="leftDate" ref="leftDate">
-        <input @change="getSignosVitales()" class="date" type="datetime-local" name="rightDate" id="rightDate"
-            ref="rightDate">
+    <div class="inputs-container">
+        <input @change="getSignosVitales()" class="date" :class="validDateRange ? '' : 'dangerDate'" type="datetime-local"
+            name="leftDate" id="leftDate" ref="leftDate">
+        <input @change="getSignosVitales()" class="date" :class="validDateRange ? '' : 'dangerDate'" type="datetime-local"
+            name="rightDate" id="rightDate" ref="rightDate">
     </div>
     <div>
-        <body v-if="signosVitales.length == 0">
-                <img src="..\assets\Loading_icon.gif" alt="">
-            </body>
-        <table v-else>
-            <thead>
-                <tr>
-                    <th>Fecha</th>
-                    <th>Signo Vital</th>
-                    <th>Valor</th>
-                    <th>Unidades</th>
+        <main v-if="signosVitales.length == 0">
+            <img src="..\assets\Loading_icon.gif" alt="">
+        </main>
+        <main v-else >
+            <table>
+                <thead>
+                    <tr>
+                        <th>Fecha</th>
+                        <th>Signo Vital</th>
+                        <th>Valor</th>
+                        <th>Unidades</th>
+                    </tr>
+                </thead>
+
+                <tr v-for="signoVital, i in signosVitales" :key="i">
+                    <td>{{ signoVital.fecha }}</td>
+                    <td>{{ signoVital.nombre_signo }}</td>
+                    <td>{{ signoVital.valor }}</td>
+                    <td>{{ signoVital.unidad }}</td>
                 </tr>
-            </thead>
 
-            <tr v-for="signoVital, i in signosVitales" :key="i">
-                <td>{{ signoVital.fecha }}</td>
-                <td>{{ signoVital.nombre_signo }}</td>
-                <td>{{ signoVital.valor }}</td>
-                <td>{{ signoVital.unidad }}</td>
-            </tr>
-
-        </table>
+            </table>
+        </main>
 
     </div>
 </template>
@@ -145,9 +155,35 @@ const getDateTimeStr = (date) => {
     font-size: 1.5rem;
 }
 
+.inputs-container {
+    display: flex;
+    justify-content: space-around;
+}
+
+main {
+    margin: 20px 0 0 0;
+    display: flex;
+    justify-content: center;
+}
+
 table {
     border-collapse: collapse;
-    width: 70%;
+    width: 90%;
+}
+
+table thead {
+    background-color: var(--color-soft-blue);
+    color: var(--color-gray-900);
+}
+
+table td,
+table th {
+    border: 2px solid var(--color-gray-800);
+    padding: 8px;
+}
+
+.dangerDate {
+    border-color: var(--color-danger);
 }
 </style>
 
