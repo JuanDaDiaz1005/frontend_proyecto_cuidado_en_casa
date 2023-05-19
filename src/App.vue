@@ -22,13 +22,13 @@ onMounted(() => {
           <div id="registrar_desplegable">
             Registrar
             <ul id="registrar" class="registrar-menu">
-              <li><RouterLink to="/about">Diagnóstico</RouterLink></li>
-              <li><RouterLink to="/about">Sugerencia de cuidado</RouterLink></li>
+              <li><RouterLink to="/registrar_diagnostico">Diagnóstico</RouterLink></li>
+              <li><RouterLink to="/registrar_sugerencia_cuidado">Sugerencia de cuidado</RouterLink></li>
             </ul>
           </div>
         </div>
         <div id="link-login">
-          <RouterLink to="/login">Ingresar</RouterLink>  
+          <RouterLink to="/ingresar">Ingresar</RouterLink>  
         </div>
     </nav>
   </header>

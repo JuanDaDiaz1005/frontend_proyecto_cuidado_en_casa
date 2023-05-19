@@ -3,14 +3,13 @@
 </script>
 
 <template> 
-    <main>
+
         <p>Lorem ipsum dolor sit amet.</p>
-    </main>
+
 </template>
 
-<style scoped> 
+<style> 
     main{
-        padding: 0;
         margin: 0px 250px;
         background-color: var(--color-beige);
     }

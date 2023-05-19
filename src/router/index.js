@@ -35,6 +35,11 @@ const router = createRouter({
       component: ConsultarSignosVitales
     },
     {
+      path: '/registrar_sugerencia_cuidado',
+      name: 'registrar_sugerencia_cuidado',
+      component: RegistrarDiagnostico
+    },
+    {
       path: '/ingresar',
       name: 'ingresar',
       component: Ingresar
