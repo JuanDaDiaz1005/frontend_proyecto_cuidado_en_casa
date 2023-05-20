@@ -2,6 +2,7 @@ import { createRouter, createWebHistory } from 'vue-router'
 import Home from '../components/Home.vue'
 import ConsultarPaciente from '../components/ConsultarPaciente.vue'
 import RegistrarDiagnostico from '../components/RegistrarDiagnostico.vue'
+import RegistrarSugerenciaCuidado from '../components/RegistrarSugerenciaCuidado.vue'
 import ConsultarSignosVitales from '../components/ConsultarSignosVitales.vue'
 import InfoPaciente from '../components/InfoPaciente.vue'
 import Ingresar from '../components/Ingresar.vue'
@@ -37,7 +38,7 @@ const router = createRouter({
     {
       path: '/registrar_sugerencia_cuidado',
       name: 'registrar_sugerencia_cuidado',
-      component: RegistrarDiagnostico
+      component: RegistrarSugerenciaCuidado
     },
     {
       path: '/ingresar',
