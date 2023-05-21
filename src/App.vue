@@ -1,6 +1,12 @@
-<script setup>
-import { RouterLink, RouterView } from 'vue-router'
+<script>
 import { onMounted } from 'vue';
+import { RouterLink, RouterView } from 'vue-router'
+export default{
+  methods:{
+
+  }
+}
+
 onMounted(() => {
   const registrar = document.getElementById('registrar_desplegable');
 
@@ -17,19 +23,17 @@ onMounted(() => {
 
     <nav class="nav-links">
         <div id="links-principales">
-          <RouterLink to="/"><img class="logo-inicio" src="../src/assets/LogoSW2.png" alt=""></RouterLink>
-          <RouterLink to="/consultar_paciente">Consultar paciente</RouterLink>
-          <div id="registrar_desplegable">
-            Registrar
-            <ul id="registrar" class="registrar-menu">
-              <li><RouterLink to="/registrar_diagnostico">Diagnóstico</RouterLink></li>
-              <li><RouterLink to="/registrar_sugerencia_cuidado">Sugerencia de cuidado</RouterLink></li>
-            </ul>
+          <div class="links2">
+            <RouterLink to="/home"><img class="logo-inicio" src="../src/assets/images/LogoSW2.png" alt=""></RouterLink>
+            <RouterLink class = "link" to="/consultar_paciente">Consultar paciente</RouterLink>
+            <RouterLink class = "link" to="/registrar_diagnostico">Diagnóstico</RouterLink>
+            <RouterLink class = "link" to="/registrar_sugerencia_cuidado">Sugerencia de cuidado</RouterLink>
           </div>
-        </div>
-        <div id="link-login">
-          <RouterLink to="/ingresar">Ingresar</RouterLink>  
-        </div>
+          <div>
+            <RouterLink class = "link" to="/ingresar">Ingresar</RouterLink>  
+          </div>
+        </div>    
+        
     </nav>
   </header>
 
@@ -41,48 +45,52 @@ onMounted(() => {
 
 <style>
 
+
 .bodyGeneral {
   padding: 0;
   margin: 0px 250px;
-  background-color: var(--color-beige);
 }
 
 .nav-links{
+
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  height: 50px;
+  height: 100px;
   background-color: var(--color-soft-blue);
+  font-size: 15pt;
+  color: black;
+  font-weight: 600;
+  font-family: var(--fuente-principal);
 }
 
 .logo-inicio{
   margin: 0;
-  width: 30px;
-  height: 30px;
+  width: 60px;
+  height: 60px;
   padding: 0PX 30px 0 15PX;
 }
 
  #links-principales{
   display: flex;
+  width: 100%;
   flex-direction: row;
-  padding-left: 5px;
   align-items: center;
-  
+  margin: 0 250px;
+  justify-content: space-around;
  }
 
- #link-login{
-  padding-right: 5px;
+ .link{
+  padding-right: 10px;
+  text-decoration: none;
+  color:black;
  }
 
-.registrar-menu {
-  list-style: none;
-  display:none;
-  padding-left: 5px;
- }
-
- #registrar-desplegable :hover{
-  color: white;
+ .links2{
+  display: flex;
+  align-items: center;
+  width: 100%;
  }
 
 </style>

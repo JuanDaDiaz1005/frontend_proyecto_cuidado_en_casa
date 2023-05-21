@@ -1,4 +1,8 @@
-/* color palette from <https://github.com/vuejs/theme> */
+@font-face {
+  font-family: 'Questa Regular';
+  src: url('../fonts/2-Questa_Regular.otf') format('otf');
+}
+
 :root {
 
   margin: 0px;
@@ -27,6 +31,9 @@
   --color-gray-700: #495057;
   --color-gray-800: #343a40;
   --color-gray-900: #212529;
+
+  /*Fuentes*/
+  --fuente-principal: 'Questa Regular', sans-serif;
 
 }
 
