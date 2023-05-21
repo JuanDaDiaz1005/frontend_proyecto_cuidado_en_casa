@@ -1,46 +1,49 @@
 <script setup>
 import { onMounted, ref } from 'vue';
 
-const prioridades = ref([
-    { value: '1', text: 'Prioridad 1' },
-    { value: '2', text: 'Prioridad 2' },
-    { value: '3', text: 'Prioridad 3' },
-    { value: '4', text: 'Prioridad 4' },
-    { value: '5', text: 'Prioridad 5' },])
-
+const profesionales = ref([])
 const pacientes = ref([])
 
 onMounted(() => {
-    // los pacientes se obtienen de la API
+    // los pacientes y profecionales se obtienen de la API
     setTimeout(() => {
         pacientes.value = [
-            { id: 1, nombre: "Juan Bernardo" },
-            { id: 2, nombre: "Arturo Calle" },
-            { id: 3, nombre: "Juan Camilo" },
+            { id: 1, fullName: "Juan Bernardo" },
+            { id: 2, fullName: "Arturo Calle" },
+            { id: 3, fullName: "Juan Camilo" },
+        ]
+
+        profesionales.value = [
+            { id: 1, fullName: "Dr Juliana" },
+            { id: 2, fullName: "Dr Jaima" },
         ]
     }, 2000)
 })
 
-const vSubmit = (e) => {
+const submit = (e) => {
     e.preventDefault();
-    const prioridad = Number(e.target.prioridad.value);
+    const idProfesional = Number(e.target.profesional.value);
     const idPaciente = Number(e.target.paciente.value);
     const descripcion = e.target.descripcion.value;
-    const contraIndicaciones = e.target.contraIndicaciones.value;
+    const fechaFinal = e.target.fechaFinal.value;
+    const fechaInicial = e.target.fechaInicial.value;
+    const cuidado = e.target.cuidado.value;
 
-    if (!prioridad || !idPaciente || !descripcion || !contraIndicaciones) {
+    const isCompleteData = idProfesional && idPaciente && descripcion && fechaFinal && fechaInicial && cuidado
+    if (!isCompleteData) {
         alert('Todos los campos son obligatorios')
         return
     }
 
     const data = {
-        prioridad,
+        idProfesional,
         idPaciente,
         descripcion,
-        contraIndicaciones
-    }
+        fechaFinal,
+        fechaInicial,
+        cuidado}
 
-    // aquí va el llamado a la API
+    // aquí va el envío a la API
     setTimeout(() => {
         console.table(data)
         alert('Sugerencia de cuidado registrada')
@@ -51,30 +54,78 @@ const vSubmit = (e) => {
 </script>
 
 <template>
-    <form @submit="vSubmit">
-        <div>
-            <select name="prioridad">
-                <option value="" disabled selected>Seleccione una prioridad</option>
-                <option v-for="prioridad in prioridades" :value="prioridad.value">
-                    {{ prioridad.text }}
-                </option>
-            </select>
+    <form @submit="submit">
+        <div class="selects">
             <select name="paciente">
                 <option value="" disabled selected>Seleccione un paciente</option>
                 <option v-for="paciente in pacientes" :value="paciente.id">
-                    {{ paciente.nombre }}
+                    {{ paciente.fullName }}
+                </option>
+            </select>
+            <select name="profesional">
+                <option value="" disabled selected>Seleccione un profesional</option>
+                <option v-for="profesional in profesionales" :value="profesional.id">
+                    {{ profesional.fullName }}
                 </option>
             </select>
         </div>
-
+        <div class="dates">
+            <label for="fechaInicial">fechaInicial</label>
+            <input class="date" type="date" name="fechaInicial" id="">
+            <label for="fechaInicial">fechaFinal</label>
+            <input class="date" type="date" name="fechaFinal" id="">
+        </div>
+        
 
         <div>
+            <label for="cuidado">
+                Cuidado
+            </label>
+            <textarea name="cuidado" id="cuidado" cols="30" rows="10"></textarea>
+
+            <label for="descripcion">
+                Descripción
+            </label>
             <textarea name="descripcion" id="" cols="30" rows="10"></textarea>
-            <textarea name="contraIndicaciones" id="" cols="30" rows="10"></textarea>
         </div>
         <button type="submit">Guardar</button>
 
     </form>
 </template>
 
-<style scoped></style>
+<style scoped>
+* {
+    font-size: 1.4rem;
+}
+
+div {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+label{
+    width: 100%;
+    text-align: start;
+}
+
+.selects{
+    display: flex;
+    flex-direction: row;
+    justify-content: start;
+  
+}
+#cuidado {
+    height: 40px;
+}
+
+.date {
+    align-self: flex-start;
+}
+
+
+textarea {
+    resize: none;
+    width: 100%;
+}
+</style>
