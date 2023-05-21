@@ -47,6 +47,7 @@
         position: relative;
         display: inline-block;
         width: 100%;
+        box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
     }
 
     .container .img1 {
