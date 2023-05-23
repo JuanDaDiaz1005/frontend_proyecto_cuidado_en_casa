@@ -1,5 +1,34 @@
 <script setup> 
     import { RouterLink, RouterView } from 'vue-router'
+    const submit = (e) => {
+    e.preventDefault();
+
+    const descripcion = e.target.descripcion?.value;
+    const nombre = e.target.nombre?.value;
+
+    const isCompleteData = descripcion && nombre
+    if (!isCompleteData) {
+        alert('Todos los campos son obligatorios')
+        return
+    }
+    // aquí va el envío a la API
+    const body = {
+        "nombre_diagnostico": nombre,
+        "descripcion": descripcion
+    }
+    console.table(body);
+    fetch('http://127.0.0.1:8000/diagnostico/post', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(body)
+    })
+    .then(res => res.json())
+    .then(data => console.log(data))
+
+    e.target.reset();
+}
 </script>
 
 <template> 
@@ -8,7 +37,7 @@
             <div class="text_areas">
                 <div class="nombre_area">
                     <label for="nombre">Nombre:</label>
-                    <textarea name="nombre" id="nombre" cols="30" rows="10" class="textarea"></textarea>
+                    <input name="nombre" id="nombre" class=" input_doc"/>
                 </div>
                 <div class="desc_area">
                     <label for="descripcion">Descripción:</label>
@@ -37,7 +66,7 @@
         padding: 3em;
         border-radius: 10px;
         width: 50%;
-        height: 80%;
+        height: 60%;
         box-shadow: 0px 0px 6px rgba(0, 0, 0, 0.25);
         display: flex;
         flex-direction: column;
@@ -57,7 +86,7 @@
         flex-direction: column;
     }
 
-    .cuidado_area, .desc_area{
+    .nombre_area, .desc_area{
         display: flex;
         flex-direction: column;
         margin-bottom: 10px;
@@ -73,6 +102,18 @@
     }
     .desc_area{
         height: 200px;
+    }
+
+    .input_doc{
+        box-sizing: border-box;
+        width: 60%;
+        height: 45px;
+        margin-bottom: 20px;
+        border-radius: 7px;
+        border: 1px solid var(--color-gray-300);
+        padding: 0px 10px;
+        font-family: var(--fuente-principal);
+        font-size: 14pt;
     }
 
     .btn-guardar{
