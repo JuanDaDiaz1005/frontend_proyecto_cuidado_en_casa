@@ -116,6 +116,9 @@ const getDateTimeStr = (date) => {
 </script>
 
 <template>
+     <main v-if="signosVitales.length == 0">
+            <div>Ingrese el rango de fechas en el que desea conocer los signos vitales del paciente</div>
+        </main>
     <div class="inputs-container">
         <input @change="getSignosVitales()" class="date" :class="validDateRange ? '' : 'dangerDate'" type="datetime-local"
             name="leftDate" id="leftDate" ref="leftDate">
@@ -124,7 +127,7 @@ const getDateTimeStr = (date) => {
     </div>
     <div>
         <main v-if="signosVitales.length == 0">
-            <img src="..\assets\Loading_icon.gif" alt="">
+            <img src="..\assets/images/Loading_icon.gif" alt="">
         </main>
         <main v-else >
             <table>
