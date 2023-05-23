@@ -24,7 +24,7 @@ onMounted(() => {
     <nav class="nav-links">
         <div id="links-principales">
           <div class="links2">
-            <RouterLink to="/home"><img class="logo-inicio" src="../src/assets/images/LogoSW2.png" alt=""></RouterLink>
+            <RouterLink to="/"><img class="logo-inicio" src="../src/assets/images/LogoSW2.png" alt=""></RouterLink>
             <RouterLink class = "link" to="/consultar_paciente">Consultar paciente</RouterLink>
             <RouterLink class = "link" to="/registrar_diagnostico">Diagnóstico</RouterLink>
             <RouterLink class = "link" to="/registrar_sugerencia_cuidado">Sugerencia de cuidado</RouterLink>
@@ -63,6 +63,7 @@ onMounted(() => {
   color: black;
   font-weight: 600;
   font-family: var(--fuente-principal);
+  box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.25);
 }
 
 .logo-inicio{
