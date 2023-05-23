@@ -103,9 +103,21 @@ const getSignosVitales = () => {
 
     validDateRange.value = true
 
-    setTimeout(() => {
-        signosVitales.value = temporalUseCase
-    }, 1000);
+    const body = {
+        "id": 3,
+        "fecha_inicio": leftDateStr,
+        "fecha_fin": rightDateStr
+    }
+
+    fetch('http://127.0.0.1:8000/signo_vital/consultar_signos_vitales', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(body)
+    })
+    .then(res => res.json())
+    .then(data => signosVitales.value = data)
 }
 
 const getDateTimeStr = (date) => {
@@ -142,9 +154,9 @@ const getDateTimeStr = (date) => {
 
                 <tr v-for="signoVital, i in signosVitales" :key="i">
                     <td>{{ signoVital.fecha }}</td>
-                    <td>{{ signoVital.nombre_signo }}</td>
+                    <td>{{ signoVital.signo_vital.nombre_signo }}</td>
                     <td>{{ signoVital.valor }}</td>
-                    <td>{{ signoVital.unidad }}</td>
+                    <td>{{ signoVital.signo_vital.unidad }}</td>
                 </tr>
 
             </table>
