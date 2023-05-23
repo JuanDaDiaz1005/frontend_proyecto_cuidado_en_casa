@@ -156,6 +156,7 @@ table td {
 .tabla_espacio{
     margin-top: 20px;
     margin-bottom: 30px;
+    height: 100vh;
 }
 
 .tabla{
