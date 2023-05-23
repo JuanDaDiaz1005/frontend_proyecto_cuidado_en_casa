@@ -16,6 +16,7 @@
 <template> 
     <main>
         <p>Página de info paciente</p>
+        <slot></slot>
         <!-- <RouterLink to="/consultar_paciente/paciente.nombre/consultar_signos_vitales">Historial de signos vitales</RouterLink> -->
         <RouterLink :to="{ name: 'consultar_signos_vitales', params: { nombre: paciente.nombre } }">Ver detalles del usuario</RouterLink>
     </main>

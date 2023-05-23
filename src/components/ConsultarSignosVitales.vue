@@ -108,7 +108,7 @@ const getSignosVitales = () => {
         "fecha_inicio": leftDateStr,
         "fecha_fin": rightDateStr
     }
-
+    console.log(body);
     fetch('http://127.0.0.1:8000/signo_vital/consultar_signos_vitales', {
         method: 'POST',
         headers: {

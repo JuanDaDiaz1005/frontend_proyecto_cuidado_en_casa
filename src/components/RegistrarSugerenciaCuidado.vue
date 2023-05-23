@@ -20,12 +20,12 @@ onMounted(() => {
 
 const submit = (e) => {
     e.preventDefault();
-    const idProfesional = Number(e.target.profesional.value);
-    const idPaciente = Number(e.target.paciente.value);
-    const descripcion = e.target.descripcion.value;
-    const fechaFinal = e.target.fechaFinal.value;
-    const fechaInicial = e.target.fechaInicial.value;
-    const cuidado = e.target.cuidado.value;
+    const idProfesional = Number(e.target.profesional?.value);
+    const idPaciente = Number(e.target.paciente?.value);
+    const descripcion = e.target.descripcion?.value;
+    const fechaFinal = new Date(e.target.fechaFinal?.value);
+    const fechaInicial = new Date(e.target.fechaInicial?.value);
+    const cuidado = e.target.cuidado?.value;
 
     const isCompleteData = idProfesional && idPaciente && descripcion && fechaFinal && fechaInicial && cuidado
     if (!isCompleteData) {
@@ -33,19 +33,26 @@ const submit = (e) => {
         return
     }
 
-    const data = {
-        idProfesional,
-        idPaciente,
-        descripcion,
-        fechaFinal,
-        fechaInicial,
-        cuidado}
-
+    console.log(typeof fechaFinal);
     // aquí va el envío a la API
-    setTimeout(() => {
-        console.table(data)
-        alert('Sugerencia de cuidado registrada')
-    }, 2000)
+    const body = {
+        "fecha_inicial": fechaInicial,
+        "fecha_final": fechaFinal,
+        "profesional_id": idProfesional,
+        "paciente_id": idPaciente,
+        "cuidado": cuidado,
+        "descripcion": descripcion
+    }
+    console.table(body);
+    fetch('http://127.0.0.1:8000/historial_cuidados/post', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(body)
+    })
+    .then(res => res.json())
+    .then(data => console.log(data))
 
     e.target.reset();
 }
@@ -54,13 +61,13 @@ const submit = (e) => {
 <template>
     <form @submit="submit">
         <div class="selects">
-            <select nombre="paciente">
+            <select name="paciente">
                 <option value="" disabled selected>Seleccione un paciente</option>
                 <option v-for="paciente in pacientes" :value="paciente.id">
                     {{ paciente.nombre }}
                 </option>
             </select>
-            <select nombre="profesional">
+            <select name="profesional">
                 <option value="" disabled selected>Seleccione un profesional</option>
                 <option v-for="profesional in profesionales" :value="profesional.id">
                     {{ profesional.nombre }}
@@ -69,9 +76,9 @@ const submit = (e) => {
         </div>
         <div class="dates">
             <label for="fechaInicial">fechaInicial</label>
-            <input class="date" type="date" nombre="fechaInicial" id="">
+            <input class="date" type="date" name="fechaInicial" id="">
             <label for="fechaInicial">fechaFinal</label>
-            <input class="date" type="date" nombre="fechaFinal" id="">
+            <input class="date" type="date" name="fechaFinal" id="">
         </div>
         
 
@@ -79,12 +86,12 @@ const submit = (e) => {
             <label for="cuidado">
                 Cuidado
             </label>
-            <textarea nombre="cuidado" id="cuidado" cols="30" rows="10"></textarea>
+            <textarea name="cuidado" id="cuidado" cols="30" rows="10"></textarea>
 
             <label for="descripcion">
                 Descripción
             </label>
-            <textarea nombre="descripcion" id="" cols="30" rows="10"></textarea>
+            <textarea name="descripcion" id="" cols="30" rows="10"></textarea>
         </div>
         <button type="submit">Guardar</button>
 

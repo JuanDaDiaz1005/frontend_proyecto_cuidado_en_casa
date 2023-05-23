@@ -1,61 +1,84 @@
-<script>
-    import { onMounted } from 'vue';
-    import { RouterLink, RouterView } from 'vue-router'
-    onMounted(() => {
-        
-    });
-    export default {
-        methods: {
-            async sendData() {
-                try {
-                    const response = await axios.get('http://localhost:8000/ruta-de-tu-api', {
-                        cedula: "123456789"
-                    });
-                    // La respuesta de FastAPI estará disponible en response.data
-                    console.log(response.data);
-                } catch (error) {
-                    console.error(error);
-                }
-            }
-        },
-        data() {
-            return { 
-                paciente: {
-                "id": 3,
-                "nombre": "Paciente",
-                "apellido": "ApellidoPaciente",
-                "edad": 30,
-                "cedula": "123456789",
-                "telefono": "1234567890",
-                "email": "paciente@correo.com",
-                "psswd": "contrasena",
-                "direccion": "calle 32 # 40-50, Linares"
-                }
-            }
-        }
+<script setup>
+import { onMounted, ref } from 'vue';
+import { RouterLink, RouterView } from 'vue-router'
+import InfoPaciente from './InfoPaciente.vue'
+
+const cedula = ref('e')
+const paciente = ref(null)
+onMounted(() => {
+    
+});
+
+const nombre = 'juan'
+
+function changeCedula(event) {
+    cedula.value = event.target.value
+}
+
+function consultarPaciente(e) {
+    e.preventDefault()
+    console.log('------');
+
+    if (cedula.value == '') {
+        alert('Todos los campos son obligatorios')
+        return
     }
+    
+    const body = {
+        "cedula": cedula.value
+    }
+    console.log(body);
+    fetch('http://127.0.0.1:8000/paciente/get_paciente', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(body)
+    })
+    .then(res => res.json())
+    .then(data => {
+        if (data?.nombre == undefined) {
+            return
+        }
+        paciente.value = data
+    })
+}
 </script>
 
 <template> 
-    <main>
+    <main v-if="!paciente">
         <div class="container_consulta">
-            <form action="#" class="formulario">
+            <form  action="#" class="formulario">
                 <div class="tipo_doc">
                     <label for="select_tipo_doc">Tipo de documento:</label>
                     <select name="select_tipo_doc" id="select_tipo_doc" class="input_doc">
                         <option value="#">Seleccione una opción</option>
-                        <option value="cedula">Cédula</option>
+                        <option value="cc">Cédula</option>
                         <option value="tarjeta">Tarjeta de identidad</option>
                         <option value="pasaporte">Pasaporte</option>
                     </select>
                 </div>
                 <div class="tipo_doc">
                     <label for="num_id">Número de identificación:</label>
-                    <input type="text" name="numero_identificacion" id="num_id" class="input_doc">
+                    <input @change="changeCedula" type="text" name="numero_identificacion" id="num_id" class="input_doc">
                 </div>
+                <button @click="consultarPaciente">Consultar</button>
             </form>
-            <button><RouterLink :to="{ name: 'info_paciente', params: { nombre: paciente.nombre } }" class="btn_consultar">Consultar</RouterLink></button>
+            
         </div>
+    </main>
+    <main v-else>
+        <InfoPaciente>
+            <div>
+            <p >{{ paciente.nombre }}</p>
+            <p >{{ paciente.apellido }}</p>
+            <p >{{ paciente.edad }}</p>
+            <p >{{ paciente.cedula }}</p>
+            <p >{{ paciente.telefono }}</p>
+            <p >{{ paciente.email }}</p>
+            <p >{{ paciente.direccion }}</p>
+        </div>
+        </InfoPaciente>
     </main>
 </template>
 
