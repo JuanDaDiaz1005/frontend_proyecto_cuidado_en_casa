@@ -128,20 +128,26 @@ const getDateTimeStr = (date) => {
 </script>
 
 <template>
-     <main v-if="signosVitales.length == 0">
+     <div v-if="signosVitales.length == 0" class="title">
             <div>Ingrese el rango de fechas en el que desea conocer los signos vitales del paciente</div>
-        </main>
+     </div>
     <div class="inputs-container">
-        <input @change="getSignosVitales()" class="date" :class="validDateRange ? '' : 'dangerDate'" type="datetime-local"
+        <div>
+            <label>Fecha inicial:</label>
+            <input @change="getSignosVitales()" class="date" :class="validDateRange ? '' : 'dangerDate'" type="datetime-local"
             name="leftDate" id="leftDate" ref="leftDate">
-        <input @change="getSignosVitales()" class="date" :class="validDateRange ? '' : 'dangerDate'" type="datetime-local"
+        </div>
+        <div>
+            <label>Fecha inicial:</label>
+            <input @change="getSignosVitales()" class="date" :class="validDateRange ? '' : 'dangerDate'" type="datetime-local"
             name="rightDate" id="rightDate" ref="rightDate">
+        </div>
     </div>
-    <div>
-        <main v-if="signosVitales.length == 0">
+    <div class="tabla">
+        <div v-if="signosVitales.length == 0" class="gif_carga">
             <img src="..\assets/images/Loading_icon.gif" alt="">
-        </main>
-        <main v-else >
+        </div>
+        <div v-else >
             <table>
                 <thead>
                     <tr>
@@ -160,7 +166,7 @@ const getDateTimeStr = (date) => {
                 </tr>
 
             </table>
-        </main>
+        </div>
 
     </div>
 </template>
@@ -173,6 +179,7 @@ const getDateTimeStr = (date) => {
 .inputs-container {
     display: flex;
     justify-content: space-around;
+    margin: 20px 0 0 0;
 }
 
 main {
@@ -183,7 +190,7 @@ main {
 
 table {
     border-collapse: collapse;
-    width: 90%;
+    width: 100%;
 }
 
 table thead {
@@ -195,10 +202,35 @@ table td,
 table th {
     border: 2px solid var(--color-gray-800);
     padding: 8px;
+    width: ;
 }
 
 .dangerDate {
     border-color: var(--color-danger);
+}
+
+.title{
+    display: flex;
+    justify-content:center ;
+    font-family: var(--fuente-principal);
+    margin: 20px 0px;
+}
+
+.gif_carga{
+    display: flex;
+    justify-content: center;
+    margin: 20px 0px;
+    height: 100px;
+}
+
+.tabla{
+    margin-top: 20px;
+    margin-bottom: 30px;
+}
+
+label{
+    font-family: var(--fuente-principal);
+    margin-right: 20px;
 }
 </style>
 
