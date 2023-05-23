@@ -62,7 +62,9 @@ function consultarPaciente(e) {
                     <label for="num_id">Número de identificación:</label>
                     <input @change="changeCedula" type="text" name="numero_identificacion" id="num_id" class="input_doc">
                 </div>
-                <button @click="consultarPaciente">Consultar</button>
+                <div class="btn">
+                    <button @click="consultarPaciente" class="btn_consultar">Consultar</button>
+                </div>
             </form>
             
         </div>
@@ -139,17 +141,27 @@ function consultarPaciente(e) {
         cursor: pointer;
     }
 
+    .btn{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
     .btn_consultar{
-        width: 100%;
+        margin-top:20px;
+        width: 30%;
         height: 45px;
-        border-radius: 7px;
-        border: none;
+        border-radius: 5px;
         color: black;
-        background-color: var(--color-primary);
+        border:none;
+        cursor: pointer;
+        background-color: var(--color-success);
         font-family: var(--fuente-principal);
         font-size: 14pt;
-        font-weight: bold;
-        transition: all 0.3s ease;
         text-decoration: none;
+    }
+
+    .btn_consultar:hover{
+        background-color: white;
+        border: 2px solid var(--color-success);
     }
 </style>
