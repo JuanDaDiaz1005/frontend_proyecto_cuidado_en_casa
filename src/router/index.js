@@ -21,7 +21,7 @@ const router = createRouter({
       component: ConsultarPaciente
     },
     {
-      path: '/consultar_paciente/:nombre',
+      path: '/info_paciente',
       name: 'info_paciente',
       component: InfoPaciente
     },
@@ -31,7 +31,7 @@ const router = createRouter({
       component: RegistrarDiagnostico
     },
     {
-      path: '/consultar_paciente/:nombre/consultar_signos_vitales',
+      path: '/consultar_signos_vitales',
       name: 'consultar_signos_vitales',
       component: ConsultarSignosVitales
     },

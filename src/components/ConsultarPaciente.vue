@@ -1,22 +1,23 @@
-<script setup>
-import { onMounted, ref } from 'vue';
-import { RouterLink, RouterView } from 'vue-router'
+<script>
+import {ref } from 'vue';
 import InfoPaciente from './InfoPaciente.vue'
+import ConsultarSignosVitales from './ConsultarSignosVitales.vue';
+
+export default {
+    components: {
+    InfoPaciente,
+    ConsultarSignosVitales,
+}
+}
 
 const cedula = ref('e')
-const paciente = ref(null)
-onMounted(() => {
-    
-});
-
-const nombre = 'juan'
+const paciente = ref(null);
 
 function changeCedula(event) {
     cedula.value = event.target.value
 }
 
-function consultarPaciente(e) {
-    e.preventDefault()
+function consultarPaciente() {
     console.log('------');
 
     if (cedula.value == '') {
@@ -25,7 +26,7 @@ function consultarPaciente(e) {
     }
     
     const body = {
-        "cedula": cedula.value
+        "cedula": "123456789"
     }
     console.log(body);
     fetch('http://127.0.0.1:8000/paciente/get_paciente', {
@@ -40,13 +41,15 @@ function consultarPaciente(e) {
         if (data?.nombre == undefined) {
             return
         }
+        console.log(data);
         paciente.value = data
+        console.log(paciente.value);
     })
 }
 </script>
 
 <template> 
-    <main v-if="!paciente">
+    <main>
         <div class="container_consulta">
             <form  action="#" class="formulario">
                 <div class="tipo_doc">
@@ -63,66 +66,57 @@ function consultarPaciente(e) {
                     <input @change="changeCedula" type="text" name="numero_identificacion" id="num_id" class="input_doc">
                 </div>
                 <div class="btn">
-                    <button @click="consultarPaciente" class="btn_consultar">Consultar</button>
+                    <button @click.prevent="()=>{consultarPaciente()}" class="btn_consultar">Consultar</button>
                 </div>
             </form>
-            
         </div>
-    </main>
-    <main v-else>
-        <InfoPaciente>
-            <div>
-            <p >{{ paciente.nombre }}</p>
-            <p >{{ paciente.apellido }}</p>
-            <p >{{ paciente.edad }}</p>
-            <p >{{ paciente.cedula }}</p>
-            <p >{{ paciente.telefono }}</p>
-            <p >{{ paciente.email }}</p>
-            <p >{{ paciente.direccion }}</p>
+        <div class="paciente">
+            <div v-if="paciente == null" class="carga">
+                <img src="..\assets/media/loading-102.gif" alt="Cargando..." class="gifCarga" >
+            </div>
+            <div class="infoPaciente" v-else>
+                <InfoPaciente></InfoPaciente>
+            </div>
         </div>
-        </InfoPaciente>
+
     </main>
 </template>
 
 <style scoped>
 
-    main{
-        width: 100%;
-        height: 90vh;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        overflow: hidden;
-    }
     .container_consulta{
+        box-sizing: border-box;
         background-color: var(--color-gray-100);
-        margin: 40px 40px;
         padding: 3em;
-        border-radius: 10px;
-        width: 40%;
-        height: 60%;
+        border-bottom-left-radius: 10px;
+        border-bottom-right-radius: 10px;
+        width: 100%;
         box-shadow: 0px 0px 6px rgba(0, 0, 0, 0.25);
         display: flex;
-        flex-direction: column;
         justify-content: center;
         align-items: center;
     }
 
     .formulario{
-        margin: 60px 0px;
-        width: 65%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        height: 20px;
     }
 
     label{
+        margin-top: 10px;
         margin-bottom: 10px;
         font-family: var(--fuente-principal);
-        font-size: 16pt;
+        font-size: 14pt;
     }
 
     .tipo_doc{
         display: flex;
         flex-direction: column;
-        width: 100%;
+        width: 40%;
+        margin-right: 15px;
     }
 
     .input_doc{
@@ -147,8 +141,9 @@ function consultarPaciente(e) {
         align-items: center;
     }
     .btn_consultar{
-        margin-top:20px;
-        width: 30%;
+        margin-top: 15px;
+        padding: 0px 10px;
+        width: 100%;
         height: 45px;
         border-radius: 5px;
         color: black;
@@ -156,12 +151,35 @@ function consultarPaciente(e) {
         cursor: pointer;
         background-color: var(--color-success);
         font-family: var(--fuente-principal);
-        font-size: 14pt;
+        font-size: 13pt;
         text-decoration: none;
     }
 
     .btn_consultar:hover{
+        box-sizing: border-box;
         background-color: white;
         border: 2px solid var(--color-success);
+    }
+    .paciente{
+        box-sizing: border-box;
+        width: 100%;
+        padding: 2em;
+        display: flex;
+        align-items: center;
+    }
+
+    .carga{
+        width: 100%;
+        display: flex;
+        justify-content: center;
+    }
+
+    .infoPaciente{
+        padding: 0;
+        width: 100%;
+    }
+
+    .gifCarga{
+        width: 50px;
     }
 </style>

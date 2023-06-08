@@ -1,5 +1,11 @@
-<script setup> 
-    import { RouterLink, RouterView } from 'vue-router'
+<script >
+    export default {
+        data() {
+            return {
+                paciente: paciente
+            }
+        },
+    }
     const paciente = {
         "id": 3,
         "nombre": "Paciente",
@@ -15,16 +21,57 @@
 
 <template> 
     <main>
-        <p>Página de info paciente</p>
-        <slot></slot>
-        <!-- <RouterLink to="/consultar_paciente/paciente.nombre/consultar_signos_vitales">Historial de signos vitales</RouterLink> -->
-        <RouterLink :to="{ name: 'consultar_signos_vitales', params: { nombre: paciente.nombre } }">Ver detalles del usuario</RouterLink>
+        <h1 class="nombrePaciente">{{ paciente.nombre }} {{ paciente.apellido }}</h1>
+        <div class="contenedor">
+            <div class="infoBasica">
+                <p>Información Básica</p>
+                <div class="datos">
+                    <div class="dato">Cedula: {{ paciente.cedula }}</div>
+                    <div class="dato">Edad: {{ paciente.edad }}</div>
+                    <div class="dato">Dirección: {{ paciente.direccion }}</div>
+                </div>
+            </div>
+            <div class="infoContacto">
+                <p>Información de contacto</p>
+                <div class="datos">
+                    <div class="dato">Teléfono: {{ paciente.telefono }}</div>
+                    <div class="dato">Email: {{ paciente.email }}</div>
+                </div>
+            </div>
+            <div class="enlace">
+                <RouterLink to="/consultar_signos_vitales"><img src="../assets/media/tiempo.png" alt="" class="historialSignosVitales"></RouterLink>
+            </div>
+        </div>
     </main>
 </template>
 
-<style scoped> 
+<style >
     main{
-        margin: 0px 250px;
-        background-color: var(--color-beige);
+        width: 100%;
+    }
+    p{
+        font-size: 17pt;
+        margin-top:10px;
+        margin-bottom: 15px;
+    }
+
+    .datos{
+        margin-left: 10px;
+        font-size: 14pt;
+    }
+
+    .dato{
+        margin: 2px 0px;
+    }
+
+    .historialSignosVitales{
+        width: 40px;
+    }
+
+    .enlace{
+        width: 80%;
+        margin: auto;
+        display: flex;
+        justify-content: end;
     }
 </style>

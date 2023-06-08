@@ -1,4 +1,4 @@
-<script setup>
+<script>
 import { ref } from 'vue'
 const leftDate = ref('')
 const rightDate = ref('')
@@ -47,7 +47,7 @@ const getDateTimeStr = (date) => {
 </script>
 
 <template>
-     <div v-if="signosVitales.length == 0" class="title">
+     <div v-if="signosVitales.value.length == 0" class="title">
             <div>Ingrese el rango de fechas en el que desea conocer los signos vitales del paciente</div>
      </div>
     <div class="inputs-container">
@@ -63,8 +63,8 @@ const getDateTimeStr = (date) => {
         </div>
     </div>
     <div class="tabla_espacio">
-        <div v-if="signosVitales.length == 0" class="gif_carga">
-            <img src="..\assets/images/Loading_icon.gif" alt="">
+        <div v-if="signosVitales.value.length == 0" class="gif_carga">
+            <img src="..\assets/media/loading-102.gif" alt="">
         </div>
         <div v-else class="tabla">
             <table>
@@ -77,7 +77,7 @@ const getDateTimeStr = (date) => {
                     </tr>
                 </thead>
 
-                <tr v-for="signoVital, i in signosVitales" :key="i">
+                <tr v-for="signoVital, i in signosVitales.value" :key="signovital.id">
                     <td>{{ signoVital.fecha }}</td>
                     <td>{{ signoVital.signo_vital.nombre_signo }}</td>
                     <td>{{ signoVital.valor }}</td>
