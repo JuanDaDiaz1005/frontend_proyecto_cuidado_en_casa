@@ -29,6 +29,7 @@ const paciente = ref(null);
 
 function changeCedula(event) {
     cedula.value = event.target.value
+    paciente.value = null
 }
 
 function consultarPaciente() {
