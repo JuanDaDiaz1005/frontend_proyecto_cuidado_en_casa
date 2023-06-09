@@ -1,5 +1,4 @@
 <script setup> 
-    import { RouterLink, RouterView } from 'vue-router'
 </script>
 
 <template> 
@@ -11,7 +10,7 @@
                 <div class="texto1">
                         nos cuidamos mientras te cuidamos
                 </div>
-                <img class="img1" src="../assets/images/1140-pre-hospice-palliative-care-esp.png" alt="imagen del cuidado en casa de una persona de la tercera edad">
+                <img class="img1" src="../assets/media/1140-pre-hospice-palliative-care-esp.png" alt="imagen del cuidado en casa de una persona de la tercera edad">
             </div>
             
             <div class="texto_info">

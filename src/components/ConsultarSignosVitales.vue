@@ -1,5 +1,11 @@
 <script setup>
 import { ref } from 'vue'
+import BASE_URL from '../assets/js/settings';
+import { useRoute } from 'vue-router';
+
+const route = useRoute();
+const id = route.params.id;
+
 const leftDate = ref('')
 const rightDate = ref('')
 const signosVitales = ref([])
@@ -23,12 +29,12 @@ const getSignosVitales = () => {
     validDateRange.value = true
 
     const body = {
-        "id": 3,
+        "id": id,
         "fecha_inicio": leftDateStr,
         "fecha_fin": rightDateStr
     }
     console.log(body);
-    fetch('http://127.0.0.1:8000/signo_vital/consultar_signos_vitales', {
+    fetch(BASE_URL + '/signo_vital/consultar_signos_vitales', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
@@ -64,7 +70,7 @@ const getDateTimeStr = (date) => {
     </div>
     <div class="tabla_espacio">
         <div v-if="signosVitales.length == 0" class="gif_carga">
-            <img src="..\assets/images/Loading_icon.gif" alt="">
+            <img src="..\assets/media/loading-102.gif" alt="">
         </div>
         <div v-else class="tabla">
             <table>
@@ -155,8 +161,7 @@ table td {
 
 .tabla_espacio{
     margin-top: 20px;
-    margin-bottom: 30px;
-    height: 100vh;
+    margin-bottom: 40px;
 }
 
 .tabla{

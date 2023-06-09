@@ -1,21 +1,5 @@
 <script>
-import { onMounted } from 'vue';
 import { RouterLink, RouterView } from 'vue-router'
-export default{
-  methods:{
-
-  }
-}
-
-onMounted(() => {
-  const registrar = document.getElementById('registrar_desplegable');
-
-  registrar.addEventListener('click', () => {
-    const links= document.getElementById('registrar');
-    links.classList.toggle('registrar-menu');
-})
-})
-
 </script>
 
 <template>
@@ -24,7 +8,7 @@ onMounted(() => {
     <nav class="nav-links">
         <div id="links-principales">
           <div class="links2">
-            <RouterLink to="/"><img class="logo-inicio" src="../src/assets/images/LogoSW2.png" alt=""></RouterLink>
+            <RouterLink to="/"><img class="logo-inicio" src="../src/assets/media/LogoSW2.png" alt=""></RouterLink>
             <RouterLink class = "link" to="/consultar_paciente">Consultar paciente</RouterLink>
             <RouterLink class = "link" to="/registrar_diagnostico">Diagnóstico</RouterLink>
             <RouterLink class = "link" to="/registrar_sugerencia_cuidado">Sugerencia de cuidado</RouterLink>
