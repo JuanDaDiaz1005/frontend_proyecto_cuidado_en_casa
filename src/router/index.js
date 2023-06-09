@@ -4,7 +4,6 @@ import ConsultarPaciente from '../components/ConsultarPaciente.vue'
 import RegistrarDiagnostico from '../components/RegistrarDiagnostico.vue'
 import RegistrarSugerenciaCuidado from '../components/RegistrarSugerenciaCuidado.vue'
 import ConsultarSignosVitales from '../components/ConsultarSignosVitales.vue'
-import InfoPaciente from '../components/InfoPaciente.vue'
 import Ingresar from '../components/Ingresar.vue'
 
 const router = createRouter({
@@ -21,17 +20,12 @@ const router = createRouter({
       component: ConsultarPaciente
     },
     {
-      path: '/info_paciente',
-      name: 'info_paciente',
-      component: InfoPaciente
-    },
-    {
       path: '/registrar_diagnostico',
       name: 'registrar_diagnostico',
       component: RegistrarDiagnostico
     },
     {
-      path: '/consultar_signos_vitales',
+      path: '/consultar_paciente/:id/:apellido:nombre/consultar_signos_vitales',
       name: 'consultar_signos_vitales',
       component: ConsultarSignosVitales
     },

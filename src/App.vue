@@ -12,7 +12,6 @@ import { RouterLink, RouterView } from 'vue-router'
             <RouterLink class = "link" to="/consultar_paciente">Consultar paciente</RouterLink>
             <RouterLink class = "link" to="/registrar_diagnostico">Diagnóstico</RouterLink>
             <RouterLink class = "link" to="/registrar_sugerencia_cuidado">Sugerencia de cuidado</RouterLink>
-            <RouterLink class = "link" to="/consultar_signos_vitales">Consultar signos vitales</RouterLink>
           </div>
           <div>
             <RouterLink class = "link" to="/ingresar">Ingresar</RouterLink>  

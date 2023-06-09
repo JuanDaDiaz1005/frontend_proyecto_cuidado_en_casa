@@ -1,5 +1,11 @@
-<script>
+<script setup>
 import { ref } from 'vue'
+import BASE_URL from '../assets/js/settings';
+import { useRoute } from 'vue-router';
+
+const route = useRoute();
+const id = route.params.id;
+
 const leftDate = ref('')
 const rightDate = ref('')
 const signosVitales = ref([])
@@ -23,12 +29,12 @@ const getSignosVitales = () => {
     validDateRange.value = true
 
     const body = {
-        "id": 3,
+        "id": id,
         "fecha_inicio": leftDateStr,
         "fecha_fin": rightDateStr
     }
     console.log(body);
-    fetch('http://127.0.0.1:8000/signo_vital/consultar_signos_vitales', {
+    fetch(BASE_URL + '/signo_vital/consultar_signos_vitales', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
@@ -47,7 +53,7 @@ const getDateTimeStr = (date) => {
 </script>
 
 <template>
-     <div v-if="signosVitales.value.length == 0" class="title">
+     <div v-if="signosVitales.length == 0" class="title">
             <div>Ingrese el rango de fechas en el que desea conocer los signos vitales del paciente</div>
      </div>
     <div class="inputs-container">
@@ -63,7 +69,7 @@ const getDateTimeStr = (date) => {
         </div>
     </div>
     <div class="tabla_espacio">
-        <div v-if="signosVitales.value.length == 0" class="gif_carga">
+        <div v-if="signosVitales.length == 0" class="gif_carga">
             <img src="..\assets/media/loading-102.gif" alt="">
         </div>
         <div v-else class="tabla">
@@ -77,7 +83,7 @@ const getDateTimeStr = (date) => {
                     </tr>
                 </thead>
 
-                <tr v-for="signoVital, i in signosVitales.value" :key="signovital.id">
+                <tr v-for="signoVital, i in signosVitales" :key="i">
                     <td>{{ signoVital.fecha }}</td>
                     <td>{{ signoVital.signo_vital.nombre_signo }}</td>
                     <td>{{ signoVital.valor }}</td>
@@ -155,8 +161,7 @@ table td {
 
 .tabla_espacio{
     margin-top: 20px;
-    margin-bottom: 30px;
-    height: 100vh;
+    margin-bottom: 40px;
 }
 
 .tabla{

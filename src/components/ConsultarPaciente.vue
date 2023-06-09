@@ -1,13 +1,27 @@
 <script>
 import {ref } from 'vue';
-import InfoPaciente from './InfoPaciente.vue'
 import ConsultarSignosVitales from './ConsultarSignosVitales.vue';
+import BASE_URL from '../assets/js/settings.js';
 
 export default {
     components: {
-    InfoPaciente,
     ConsultarSignosVitales,
-}
+},
+methods: {
+    changeCedula,
+    consultarPaciente
+},
+data() {
+    return {
+        cedula: cedula,
+        paciente: paciente
+    }
+},
+beforeRouteLeave(to, from, next) {
+    this.paciente = null;
+    this.cedula = 'e';
+    next();
+  }
 }
 
 const cedula = ref('e')
@@ -26,10 +40,10 @@ function consultarPaciente() {
     }
     
     const body = {
-        "cedula": "123456789"
+        "cedula": cedula.value
     }
     console.log(body);
-    fetch('http://127.0.0.1:8000/paciente/get_paciente', {
+    fetch(BASE_URL + '/paciente/get_paciente', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
@@ -66,7 +80,7 @@ function consultarPaciente() {
                     <input @change="changeCedula" type="text" name="numero_identificacion" id="num_id" class="input_doc">
                 </div>
                 <div class="btn">
-                    <button @click.prevent="()=>{consultarPaciente()}" class="btn_consultar">Consultar</button>
+                    <button @click.prevent="consultarPaciente" class="btn_consultar">Consultar</button>
                 </div>
             </form>
         </div>
@@ -75,7 +89,27 @@ function consultarPaciente() {
                 <img src="..\assets/media/loading-102.gif" alt="Cargando..." class="gifCarga" >
             </div>
             <div class="infoPaciente" v-else>
-                <InfoPaciente></InfoPaciente>
+                <h1 class="nombrePaciente">{{ paciente.nombre }} {{ paciente.apellido }}</h1>
+                <div class="contenedor">
+                    <div class="infoBasica">
+                        <p>Información Básica</p>
+                        <div class="datos">
+                            <div class="dato">Cedula: {{ paciente.cedula }}</div>
+                            <div class="dato">Edad: {{ paciente.edad }}</div>
+                            <div class="dato">Dirección: {{ paciente.direccion }}</div>
+                        </div>
+                    </div>
+                    <div class="infoContacto">
+                        <p>Información de contacto</p>
+                        <div class="datos">
+                            <div class="dato">Teléfono: {{ paciente.telefono }}</div>
+                            <div class="dato">Email: {{ paciente.email }}</div>
+                        </div>
+                    </div>
+                    <div class="enlace">
+                        <RouterLink :to="{name: 'consultar_signos_vitales', params:{id:paciente.id, nombre: paciente.nombre, apellido: paciente.apellido}}"><img src="../assets/media/tiempo.png" alt="" class="historialSignosVitales"></RouterLink>
+                    </div>
+                </div>
             </div>
         </div>
 
@@ -182,4 +216,34 @@ function consultarPaciente() {
     .gifCarga{
         width: 50px;
     }
+
+    main{
+        width: 100%;
+    }
+    p{
+        font-size: 17pt;
+        margin-top:10px;
+        margin-bottom: 15px;
+    }
+
+    .datos{
+        margin-left: 10px;
+        font-size: 14pt;
+    }
+
+    .dato{
+        margin: 2px 0px;
+    }
+
+    .historialSignosVitales{
+        width: 40px;
+    }
+
+    .enlace{
+        width: 80%;
+        margin: auto;
+        display: flex;
+        justify-content: end;
+    }
+
 </style>
